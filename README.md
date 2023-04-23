@@ -16,6 +16,9 @@ action uses standard
 facilities along with [`curl`](https://curl.se/) and
 [`jq`](https://stedolan.github.io/jq/).
 
+Tested on Linux, macOS, and Windows GHA runners. See
+[CI](./.github/workflows/ci.yml) for details.
+
 ## Usage
 
 ### Inputs
