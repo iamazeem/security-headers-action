@@ -27,8 +27,8 @@ jobs:
 
       - name: Verify
         env:
-          RESULTS_AS_JSON: ${{ steps.analyze.outputs.results-as-json }}
-          SUMMARY_AS_JSON: ${{ steps.analyze.outputs.summary-as-json }}
+          RESULTS_AS_JSON: '${{ steps.analyze.outputs.results-as-json }}'
+          SUMMARY_AS_JSON: '${{ steps.analyze.outputs.summary-as-json }}'
           GRADE: ${{ steps.analyze.outputs.grade }}
         run: |
           echo "RESULTS_AS_JSON: [$RESULTS_AS_JSON]"

@@ -61,7 +61,7 @@ analyze() {
     echo "$OUTPUT_RESULTS_AS_JSON=$(jq -rc '.' <<<"$API_RESPONSE")"
     echo "$OUTPUT_SUMMARY_AS_JSON=$(jq -rc '.summary' <<<"$API_RESPONSE")"
     echo "$OUTPUT_GRADE=$(jq -rc '.summary.grade | ascii_upcase' <<<"$API_RESPONSE")"
-  } >>"$GITHUB_OUTPUT"
+  } | tee -a "$GITHUB_OUTPUT"
 
   echo "::endgroup::"
 }

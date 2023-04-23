@@ -22,7 +22,7 @@ validate_environment() {
   local FOUND=true
   for CMD in curl jq; do
     echo -n "- [$CMD] "
-    if which $CMD; then
+    if which "$CMD" >/dev/null 2>&1; then
       echo "[FOUND]"
       $CMD --version
       echo
