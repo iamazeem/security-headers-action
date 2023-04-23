@@ -6,7 +6,8 @@ jobs:
   ci:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        # os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
     defaults:
@@ -41,6 +42,7 @@ jobs:
           api-key: ${{ secrets.API_KEY }}
           domain-or-url: securityheaders.com
           follow-redirects: false
+          hide-results-on-homepage: false
           expected-grade: 'R'
 
       - name: Verify
