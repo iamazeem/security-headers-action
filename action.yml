@@ -37,10 +37,10 @@ inputs:
 outputs:
   results-as-json:
     description: 'Complete results in JSON format'
-    value: '${{ steps.analyze.outputs.json-results }}'
+    value: '${{ steps.analyze.outputs.results-as-json }}'
   summary-as-json:
     description: 'Extracted summary in JSON format'
-    value: '${{ steps.analyze.outputs.json-summary }}'
+    value: '${{ steps.analyze.outputs.summary-as-json }}'
   grade:
     description: 'Extracted grade [A+ to F; or maybe R if `follow-redirects: false`]'
     value: '${{ steps.analyze.outputs.grade }}'
