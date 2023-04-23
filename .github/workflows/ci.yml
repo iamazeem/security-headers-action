@@ -25,11 +25,11 @@ jobs:
           api-key: ${{ secrets.API_KEY }}
           domain-or-url: securityheaders.com
 
-      - name: Verify
+      - name: Verify 1
         env:
-          RESULTS_AS_JSON: '${{ steps.analyze1.outputs.results-as-json }}'
-          SUMMARY_AS_JSON: '${{ steps.analyze1.outputs.summary-as-json }}'
-          GRADE: '${{ steps.analyze1.outputs.grade }}'
+          RESULTS_AS_JSON: ${{ steps.analyze1.outputs.results-as-json }}
+          SUMMARY_AS_JSON: ${{ steps.analyze1.outputs.summary-as-json }}
+          GRADE: ${{ steps.analyze1.outputs.grade }}
         run: |
           echo "RESULTS_AS_JSON: [$RESULTS_AS_JSON]"
           echo "SUMMARY_AS_JSON: [$SUMMARY_AS_JSON]"
@@ -45,12 +45,10 @@ jobs:
           hide-results-on-homepage: false
           expected-grade: 'R'
 
-      - name: Verify
+      - name: Verify 2
         env:
-          RESULTS_AS_JSON: '${{ steps.analyze2.outputs.results-as-json }}'
-          SUMMARY_AS_JSON: '${{ steps.analyze2.outputs.summary-as-json }}'
-          GRADE: '${{ steps.analyze2.outputs.grade }}'
+          RESULTS_AS_JSON: ${{ steps.analyze2.outputs.results-as-json }}
+          SUMMARY_AS_JSON: ${{ steps.analyze2.outputs.summary-as-json }}
+          GRADE: ${{ steps.analyze2.outputs.grade }}
         run: |
-          echo "RESULTS_AS_JSON: [$RESULTS_AS_JSON]"
-          echo "SUMMARY_AS_JSON: [$SUMMARY_AS_JSON]"
-          echo "GRADE: [$GRADE]"
+          jq '.' <<<"$SUMMARY_AS_JSON"
