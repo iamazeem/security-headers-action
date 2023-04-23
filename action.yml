@@ -26,11 +26,11 @@ inputs:
     required: false
     default: '30'
   max-retries-on-api-error:
-    description: 'Maximum number of retries on API error (must be +ve; -ve value means 0)'
+    description: 'Maximum number of retries on API error (must be +ve; -ve value means default)'
     required: false
     default: '0'
   expected-grade:
-    description: 'Expected grade [A+ to F; or maybe R if `follow-redirects: false`] (invalid grade is ignored)'
+    description: 'Expected grade [A+ to F; or maybe R if `follow-redirects: false`] (invalid grade means default)'
     required: false
     default: ''
 
