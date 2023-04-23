@@ -20,15 +20,15 @@ facilities along with [`curl`](https://curl.se/) and
 
 ### Inputs
 
-|           Input            | Required | Default | Description                                                                                  |
-| :------------------------: | :------: | :-----: | :------------------------------------------------------------------------------------------- |
-|         `api-key`          |  `true`  |         | API key from https://securityheaders.com/api/                                                |
-|      `domain-or-url`       |  `true`  |         | Domain or URL to analyze HTTP response headers                                               |
-|     `follow-redirects`     | `false`  | `true`  | Enable/disable following redirects                                                           |
-| `hide-results-on-homepage` | `false`  | `true`  | Enable/disable hiding results on homepage                                                    |
-|  `api-timeout-in-seconds`  | `false`  |  `30`   | API timeout in seconds (must be +ve, -ve value means default)                                |
-| `max-retries-on-api-error` | `false`  |   `0`   | Maximum number of retries on API error (must be +ve; -ve value means 0)                      |
-|      `expected-grade`      | `false`  |         | Expected grade [A+ to F; or maybe R if `follow-redirects: false`] (invalid grade is ignored) |
+|           Input            | Required | Default | Description                                                                                     |
+| :------------------------: | :------: | :-----: | :---------------------------------------------------------------------------------------------- |
+|         `api-key`          |  `true`  |         | API key from https://securityheaders.com/api/                                                   |
+|      `domain-or-url`       |  `true`  |         | Domain or URL to analyze HTTP response headers                                                  |
+|     `follow-redirects`     | `false`  | `true`  | Enable/disable following redirects                                                              |
+| `hide-results-on-homepage` | `false`  | `true`  | Enable/disable hiding results on homepage                                                       |
+|  `api-timeout-in-seconds`  | `false`  |  `30`   | API timeout in seconds (must be +ve, -ve value means default)                                   |
+| `max-retries-on-api-error` | `false`  |   `0`   | Maximum number of retries on API error (must be +ve; -ve value means default)                   |
+|      `expected-grade`      | `false`  |         | Expected grade [A+ to F; or maybe R if `follow-redirects: false`] (invalid grade means default) |
 
 ### Outputs
 
