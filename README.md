@@ -5,14 +5,38 @@
 [![GitHub release](https://img.shields.io/github/v/release/iamAzeem/security-headers-action?style=flat-square)](https://github.com/iamazeem/security-headers-action/releases)
 [![Buy Me a Coffee](https://img.shields.io/badge/Support-Buy%20Me%20A%20Coffee-orange.svg?style=flat-square)](https://www.buymeacoffee.com/iamazeem)
 
-GitHub Action to analyze HTTP response headers using
-[securityheaders.com](https://securityheaders.com/) API.
+[GitHub Action](https://docs.github.com/en/actions) to analyze HTTP response
+headers using [securityheaders.com](https://securityheaders.com/)
+[API](https://securityheaders.com/api/docs/).
+
+This
+[composite](https://docs.github.com/en/actions/creating-actions/about-custom-actions#types-of-actions)
+action uses standard
+[Bash](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)
+facilities along with [`curl`](https://curl.se/) and
+[`jq`](https://stedolan.github.io/jq/).
 
 ## Usage
 
 ### Inputs
 
+|           Input            | Required | Default | Description                                                                                  |
+| :------------------------: | :------: | :-----: | :------------------------------------------------------------------------------------------- |
+|         `api-key`          |  `true`  |         | API key from https://securityheaders.com/api/                                                |
+|      `domain-or-url`       |  `true`  |         | Domain or URL to analyze HTTP response headers                                               |
+|     `follow-redirects`     | `false`  | `true`  | Enable/disable following redirects                                                           |
+| `hide-results-on-homepage` | `false`  | `true`  | Enable/disable hiding results on homepage                                                    |
+|  `api-timeout-in-seconds`  | `false`  |  `30`   | API timeout in seconds (must be +ve, -ve value means default)                                |
+| `max-retries-on-api-error` | `false`  |   `0`   | Maximum number of retries on API error (must be +ve; -ve value means 0)                      |
+|      `expected-grade`      | `false`  |         | Expected grade [A+ to F; or maybe R if `follow-redirects: false`] (invalid grade is ignored) |
+
 ### Outputs
+
+|      Output       | Description                                                        |
+| :---------------: | :----------------------------------------------------------------- |
+| `results-as-json` | Complete results in JSON format                                    |
+| `summary-as-json` | Extracted summary in JSON format                                   |
+|      `grade`      | Extracted grade [A+ to F; or maybe R if `follow-redirects: false`] |
 
 ## Examples
 

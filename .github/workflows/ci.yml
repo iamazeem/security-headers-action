@@ -1,0 +1,36 @@
+name: CI
+
+on: workflow_dispatch
+
+jobs:
+  ci:
+    strategy:
+      matrix:
+        # os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout [${{ github.repository }}]
+        uses: actions/checkout@v3
+
+      - name: Analyze
+        id: analyze
+        uses: ./
+        with:
+          api-key: ${{ secrets.API_KEY }}
+          domain-or-url: securityheaders.com
+
+      - name: Verify
+        env:
+          RESULTS_AS_JSON: ${{ steps.analyze.outputs.results-as-json }}
+          SUMMARY_AS_JSON: ${{ steps.analyze.outputs.summary-as-json }}
+          GRADE: ${{ steps.analyze.outputs.grade }}
+        run: |
+          echo "RESULTS_AS_JSON: [$RESULTS_AS_JSON]"
+          echo "SUMMARY_AS_JSON: [$SUMMARY_AS_JSON]"
+          echo "GRADE: [$GRADE]"

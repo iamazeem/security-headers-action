@@ -1,0 +1,68 @@
+name: 'security-headers-action'
+description: 'GitHub Action to analyze HTTP response headers using securityheaders.com API'
+author: 'Azeem Sajid <azeem.sajid@gmail.com>'
+
+branding:
+  icon: 'filter'
+  color: 'blue'
+
+inputs:
+  api-key:
+    description: 'API key from https://securityheaders.com/api/'
+    required: true
+  domain-or-url:
+    description: 'Domain or URL to analyze HTTP response headers'
+    required: true
+  follow-redirects:
+    description: 'Enable/disable following redirects'
+    required: false
+    default: 'true'
+  hide-results-on-homepage:
+    description: 'Enable/disable hiding results on homepage'
+    required: false
+    default: 'true'
+  api-timeout-in-seconds:
+    description: 'API timeout in seconds (must be +ve, -ve value means default)'
+    required: false
+    default: '30'
+  max-retries-on-api-error:
+    description: 'Maximum number of retries on API error (must be +ve; -ve value means 0)'
+    required: false
+    default: '0'
+  expected-grade:
+    description: 'Expected grade [A+ to F; or maybe R if `follow-redirects: false`] (invalid grade is ignored)'
+    required: false
+    default: ''
+
+outputs:
+  results-as-json:
+    description: 'Complete results in JSON format'
+    value: '${{ steps.analyze.outputs.json-results }}'
+  summary-as-json:
+    description: 'Extracted summary in JSON format'
+    value: '${{ steps.analyze.outputs.json-summary }}'
+  grade:
+    description: 'Extracted grade [A+ to F; or maybe R if `follow-redirects: false`]'
+    value: '${{ steps.analyze.outputs.grade }}'
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: 'Analyze'
+      id: 'analyze'
+      env:
+        INPUT_API_KEY: '${{ inputs.api-key }}'
+        INPUT_DOMAIN_OR_URL: '${{ inputs.domain-or-url }}'
+        INPUT_FOLLOW_REDIRECTS: ${{ (inputs.follow-redirects == 'true') && 'on' || 'off' }}
+        INPUT_HIDE_RESULTS_ON_HOMEPAGE: ${{ (inputs.hide-results-on-homepage == 'true') && 'on' || 'off' }}
+        INPUT_API_TIMEOUT_IN_SECONDS: ${{ (inputs.api-timeout-in-seconds > 0) && inputs.timeout-in-seconds || '30' }}
+        INPUT_MAX_RETRIES_ON_API_ERROR: ${{ (inputs.max-retries-on-api-error > 0) && inputs.retries-on-api-error || '0' }}
+        INPUT_EXPECTED_GRADE: ${{ contains(fromJSON('["A+","A","B","C","D","E","F","R"]'), inputs.expected-grade) && inputs.expected-grade || '' }}
+        OUTPUT_RESULTS_AS_JSON: 'results-as-json'
+        OUTPUT_SUMMARY_AS_JSON: 'summary-as-json'
+        OUTPUT_GRADE: 'grade'
+      shell: bash
+      run: |
+        $GITHUB_ACTION_PATH/scripts/validate.bash
+        $GITHUB_ACTION_PATH/scripts/analyze.bash
