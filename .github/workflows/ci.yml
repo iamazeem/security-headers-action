@@ -31,7 +31,9 @@ jobs:
       #     SUMMARY_AS_JSON: ${{ steps.analyze1.outputs.summary-as-json }}
       #     GRADE: ${{ steps.analyze1.outputs.grade }}
       #   run: |
+      #     jq '.' <<<"$RESULTS_AS_JSON"
       #     jq '.' <<<"$SUMMARY_AS_JSON"
+      #     echo "GRADE: [$GRADE]"
 
       # - name: Analyze 2
       #   id: analyze2
@@ -49,10 +51,13 @@ jobs:
       #     SUMMARY_AS_JSON: ${{ steps.analyze2.outputs.summary-as-json }}
       #     GRADE: ${{ steps.analyze2.outputs.grade }}
       #   run: |
+      #     jq '.' <<<"$RESULTS_AS_JSON"
       #     jq '.' <<<"$SUMMARY_AS_JSON"
+      #     echo "GRADE: [$GRADE]"
 
-      - name: Analyze 3
+      - name: Analyze 3 (may fail due to connection or timeout errors)
         id: analyze3
+        continue-on-error: true
         uses: ./
         with:
           api-key: ${{ secrets.API_KEY }}
@@ -61,9 +66,12 @@ jobs:
           max-retries-on-api-error: 2
 
       - name: Check 3
+        if: ${{ steps.analyze3.outcome != 'failure' }}
         env:
           RESULTS_AS_JSON: ${{ steps.analyze3.outputs.results-as-json }}
           SUMMARY_AS_JSON: ${{ steps.analyze3.outputs.summary-as-json }}
           GRADE: ${{ steps.analyze3.outputs.grade }}
         run: |
+          jq '.' <<<"$RESULTS_AS_JSON"
           jq '.' <<<"$SUMMARY_AS_JSON"
+          echo "GRADE: [$GRADE]"
