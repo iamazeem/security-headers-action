@@ -9,7 +9,6 @@ fatal() {
   local LINE="$1"
   local CMD="$2"
   echo "[FATAL] $LINE: $CMD"
-  exit 1
 }
 
 trap 'fatal "$LINENO" "$BASH_COMMAND"' ERR
@@ -22,8 +21,8 @@ analyze() {
   if [[ $INPUT_FOLLOW_REDIRECTS == "off" ]]; then
     echo
     echo "NOTE: Following of redirect status codes is disabled."
-    echo "      You may get an 'R' grade."
     echo "      Set \`follow-redirects: true\` to get full resutls."
+    echo "      Otherwise, you may get an 'R' grade."
     echo
   fi
 
@@ -31,14 +30,16 @@ analyze() {
   echo "API URL: [$API_URL]"
 
   for ((RETRY = 0; RETRY <= INPUT_MAX_RETRIES_ON_API_ERROR; RETRY++)); do
-    echo "- Making API request [$RETRY / $INPUT_MAX_RETRIES_ON_API_ERROR]"
-    local API_RESPONSE="$(curl -sS -m "$INPUT_API_TIMEOUT_IN_SECONDS" -H "x-api-key: $INPUT_API_KEY" "$API_URL" 2>&1)"
+    echo "- Making an API request [$RETRY / $INPUT_MAX_RETRIES_ON_API_ERROR]"
+
     local IS_ERROR=false
+    local API_RESPONSE="$(curl -sS -m "$INPUT_API_TIMEOUT_IN_SECONDS" -H "x-api-key: $INPUT_API_KEY" "$API_URL" 2>&1)"
     if [[ -z $API_RESPONSE ]]; then
       echo "  Empty response!"
       IS_ERROR=true
     elif ! jq '.' <<<"$API_RESPONSE" >/dev/null 2>&1; then
-      echo "$API_RESPONSE"
+      echo "  Invalid response!"
+      echo "  $API_RESPONSE"
       IS_ERROR=true
     else
       echo "  Checking status"
@@ -52,7 +53,7 @@ analyze() {
       fi
     fi
     if [[ $IS_ERROR == true ]]; then
-      if ((INPUT_MAX_RETRIES_ON_API_ERROR)); then
+      if ((RETRY < INPUT_MAX_RETRIES_ON_API_ERROR)); then
         echo "  Retrying..."
       else
         echo "  Exiting..."
