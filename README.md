@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/iamazeem/security-headers-action/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/iamAzeem/security-headers-action/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-darkgreen.svg?style=flat-square)](https://github.com/iamAzeem/security-headers-action/blob/master/LICENSE)
-[![GitHub release](https://img.shields.io/github/v/release/iamAzeem/security-headers-action?style=flat-square)](https://github.com/iamazeem/security-headers-action/releases)
+[![GitHub release](https://img.shields.io/github/v/release/iamazeem/security-headers-action?style=flat-square)](https://github.com/iamazeem/security-headers-action/releases)
 [![Buy Me a Coffee](https://img.shields.io/badge/Support-Buy%20Me%20A%20Coffee-orange.svg?style=flat-square)](https://www.buymeacoffee.com/iamazeem)
 
 [GitHub Action](https://docs.github.com/en/actions) to analyze HTTP response
