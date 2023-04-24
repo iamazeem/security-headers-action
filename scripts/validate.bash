@@ -17,10 +17,11 @@ validate_environment() {
   echo "::group::Validating environment"
 
   echo "BASH_VERSION: [$BASH_VERSION]"
+  echo
 
   echo "Validating required commands"
   local FOUND=true
-  for CMD in curl jq; do
+  for CMD in curl jq tee; do
     echo -n "- [$CMD] "
     if which "$CMD" >/dev/null 2>&1; then
       echo "[FOUND]"
