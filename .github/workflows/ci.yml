@@ -27,7 +27,7 @@ jobs:
           api-key: ${{ secrets.API_KEY }}
           domain-or-url: securityheaders.com
 
-      - name: Verify 1
+      - name: Check 1
         env:
           RESULTS_AS_JSON: ${{ steps.analyze1.outputs.results-as-json }}
           SUMMARY_AS_JSON: ${{ steps.analyze1.outputs.summary-as-json }}
@@ -45,7 +45,7 @@ jobs:
           hide-results-on-homepage: false
           expected-grade: R
 
-      - name: Verify 2
+      - name: Check 2
         env:
           RESULTS_AS_JSON: ${{ steps.analyze2.outputs.results-as-json }}
           SUMMARY_AS_JSON: ${{ steps.analyze2.outputs.summary-as-json }}
@@ -59,10 +59,10 @@ jobs:
         with:
           api-key: ${{ secrets.API_KEY }}
           domain-or-url: securityheaders.com
-          api-timeout-in-seconds: 0.5
+          api-timeout-in-seconds: 0.1
           max-retries-on-api-error: 2
 
-      - name: Verify 3
+      - name: Check 3
         env:
           RESULTS_AS_JSON: ${{ steps.analyze3.outputs.results-as-json }}
           SUMMARY_AS_JSON: ${{ steps.analyze3.outputs.summary-as-json }}
