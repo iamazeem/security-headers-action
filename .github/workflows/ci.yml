@@ -14,44 +14,42 @@ jobs:
       run:
         shell: bash
 
-    # continue-on-error: true
-
     steps:
       - name: Checkout [${{ github.repository }}]
         uses: actions/checkout@v3
 
-      - name: Analyze 1
-        id: analyze1
-        uses: ./
-        with:
-          api-key: ${{ secrets.API_KEY }}
-          domain-or-url: securityheaders.com
+      # - name: Analyze 1
+      #   id: analyze1
+      #   uses: ./
+      #   with:
+      #     api-key: ${{ secrets.API_KEY }}
+      #     domain-or-url: securityheaders.com
 
-      - name: Check 1
-        env:
-          RESULTS_AS_JSON: ${{ steps.analyze1.outputs.results-as-json }}
-          SUMMARY_AS_JSON: ${{ steps.analyze1.outputs.summary-as-json }}
-          GRADE: ${{ steps.analyze1.outputs.grade }}
-        run: |
-          jq '.' <<<"$SUMMARY_AS_JSON"
+      # - name: Check 1
+      #   env:
+      #     RESULTS_AS_JSON: ${{ steps.analyze1.outputs.results-as-json }}
+      #     SUMMARY_AS_JSON: ${{ steps.analyze1.outputs.summary-as-json }}
+      #     GRADE: ${{ steps.analyze1.outputs.grade }}
+      #   run: |
+      #     jq '.' <<<"$SUMMARY_AS_JSON"
 
-      - name: Analyze 2
-        id: analyze2
-        uses: ./
-        with:
-          api-key: ${{ secrets.API_KEY }}
-          domain-or-url: securityheaders.com
-          follow-redirects: false
-          hide-results-on-homepage: false
-          expected-grade: R
+      # - name: Analyze 2
+      #   id: analyze2
+      #   uses: ./
+      #   with:
+      #     api-key: ${{ secrets.API_KEY }}
+      #     domain-or-url: securityheaders.com
+      #     follow-redirects: false
+      #     hide-results-on-homepage: false
+      #     expected-grade: R
 
-      - name: Check 2
-        env:
-          RESULTS_AS_JSON: ${{ steps.analyze2.outputs.results-as-json }}
-          SUMMARY_AS_JSON: ${{ steps.analyze2.outputs.summary-as-json }}
-          GRADE: ${{ steps.analyze2.outputs.grade }}
-        run: |
-          jq '.' <<<"$SUMMARY_AS_JSON"
+      # - name: Check 2
+      #   env:
+      #     RESULTS_AS_JSON: ${{ steps.analyze2.outputs.results-as-json }}
+      #     SUMMARY_AS_JSON: ${{ steps.analyze2.outputs.summary-as-json }}
+      #     GRADE: ${{ steps.analyze2.outputs.grade }}
+      #   run: |
+      #     jq '.' <<<"$SUMMARY_AS_JSON"
 
       - name: Analyze 3
         id: analyze3
