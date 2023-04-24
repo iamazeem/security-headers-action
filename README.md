@@ -33,6 +33,10 @@ Tested on Linux, macOS, and Windows GHA runners. See
 | `max-retries-on-api-error` | `false`  |   `0`   | Maximum number of retries on API error (must be +ve; -ve value means default)                   |
 |      `expected-grade`      | `false`  |         | Expected grade [A+ to F; or maybe R if `follow-redirects: false`] (invalid value means default) |
 
+**NOTE**: Prefer using GitHub Actions
+[secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
+for the API key.
+
 ### Outputs
 
 |      Output       | Description                                                        |
