@@ -55,7 +55,7 @@ jobs:
       #     jq '.' <<<"$SUMMARY_AS_JSON"
       #     echo "GRADE: [$GRADE]"
 
-      - name: Analyze 3 (may fail due to connection or timeout errors)
+      - name: Analyze 3 (expect to fail due to low timeout value)
         id: analyze3
         continue-on-error: true
         uses: ./
