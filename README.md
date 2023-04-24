@@ -35,7 +35,7 @@ Tested on Linux, macOS, and Windows GHA runners. See
 
 **NOTE**: Prefer using GitHub Actions
 [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
-for the API key.
+to store the API key.
 
 ### Outputs
 
