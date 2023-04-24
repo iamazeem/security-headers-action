@@ -46,16 +46,9 @@ jobs:
       #     expected-grade: R
 
       # - name: Check 2
-      #   env:
-      #     RESULTS_AS_JSON: ${{ steps.analyze2.outputs.results-as-json }}
-      #     SUMMARY_AS_JSON: ${{ steps.analyze2.outputs.summary-as-json }}
-      #     GRADE: ${{ steps.analyze2.outputs.grade }}
-      #   run: |
-      #     jq '.' <<<"$RESULTS_AS_JSON"
-      #     jq '.' <<<"$SUMMARY_AS_JSON"
-      #     echo "GRADE: [$GRADE]"
+      #   run: jq '.' <<<'${{ steps.analyze2.outputs.summary-as-json }}'
 
-      - name: Analyze 3 (expect to fail due to low timeout value)
+      - name: Analyze 3 (expect to fail due to a lower timeout value)
         id: analyze3
         continue-on-error: true
         uses: ./
@@ -67,11 +60,17 @@ jobs:
 
       - name: Check 3
         if: ${{ steps.analyze3.outcome != 'failure' }}
-        env:
-          RESULTS_AS_JSON: ${{ steps.analyze3.outputs.results-as-json }}
-          SUMMARY_AS_JSON: ${{ steps.analyze3.outputs.summary-as-json }}
-          GRADE: ${{ steps.analyze3.outputs.grade }}
-        run: |
-          jq '.' <<<"$RESULTS_AS_JSON"
-          jq '.' <<<"$SUMMARY_AS_JSON"
-          echo "GRADE: [$GRADE]"
+        run: jq '.' <<<'${{ steps.analyze3.outputs.summary-as-json }}'
+
+      - name: Analyze 4 (expect to fail due to a higher expected grade)
+        id: analyze4
+        continue-on-error: true
+        uses: ./
+        with:
+          api-key: ${{ secrets.API_KEY }}
+          domain-or-url: securityheaders.com
+          expected-grade: A+
+
+      - name: Check 4
+        if: ${{ steps.analyze4.outcome != 'failure' }}
+        run: jq '.' <<<'${{ steps.analyze4.outputs.summary-as-json }}'
