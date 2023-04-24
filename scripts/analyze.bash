@@ -33,8 +33,11 @@ analyze() {
     echo "- Making an API request [$RETRY / $INPUT_MAX_RETRIES_ON_API_ERROR]"
 
     local IS_ERROR=false
-    local API_RESPONSE="$(curl -sS -m "$INPUT_API_TIMEOUT_IN_SECONDS" -H "x-api-key: $INPUT_API_KEY" "$API_URL" 2>&1)"
-    if [[ -z $API_RESPONSE ]]; then
+    local API_RESPONSE=""
+    if ! API_RESPONSE="$(curl -sS -m "$INPUT_API_TIMEOUT_IN_SECONDS" -H "x-api-key: $INPUT_API_KEY" "$API_URL" 2>&1)"; then
+      echo "  $API_RESPONSE"
+      IS_ERROR=true
+    elif [[ -z $API_RESPONSE ]]; then
       echo "  Empty response!"
       IS_ERROR=true
     elif ! jq '.' <<<"$API_RESPONSE" >/dev/null 2>&1; then
@@ -66,7 +69,7 @@ analyze() {
 
   local ACTUAL_GRADE="$(jq -r '.summary.grade | ascii_upcase' <<<"$API_RESPONSE")"
   if [[ -n $INPUT_EXPECTED_GRADE ]]; then
-    echo "- Checking expected grade [$INPUT_EXPECTED_GRADE]"
+    echo "- Checking expected grade"
     echo "  Expected: [$INPUT_EXPECTED_GRADE], Actual: [$ACTUAL_GRADE]"
 
     local GRADES=(R F E D C B A A+)
@@ -84,12 +87,13 @@ analyze() {
     done
 
     if ((ACTUAL_GRADE_INDEX < EXPECTED_GRADE_INDEX)); then
-      echo "  Unexpected grade found!"
+      echo "  Lower grade found!"
+      echo "  Exiting..."
       exit 1
     elif ((ACTUAL_GRADE_INDEX == EXPECTED_GRADE_INDEX)); then
       echo "  Expected grade found!"
     else
-      echo "  Better grade found!"
+      echo "  Higher grade found!"
     fi
   fi
 
