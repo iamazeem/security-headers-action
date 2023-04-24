@@ -51,7 +51,7 @@ analyze() {
         jq -r '.' <<<"$API_RESPONSE"
         IS_ERROR=true
       else
-        echo "  API RESPONSE STATUS: [$STATUS]"
+        echo "  Status: [$STATUS]"
       fi
     fi
 
