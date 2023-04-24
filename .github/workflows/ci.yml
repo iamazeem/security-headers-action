@@ -68,6 +68,7 @@ jobs:
         with:
           api-key: ${{ secrets.API_KEY }}
           domain-or-url: securityheaders.com
+          max-retries-on-api-error: 2
           expected-grade: A+
 
       - name: Check 4
