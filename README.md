@@ -17,7 +17,7 @@ facilities along with [`curl`](https://curl.se/) and
 [`jq`](https://stedolan.github.io/jq/).
 
 Tested on Linux, macOS, and Windows GHA runners. See
-[CI](./.github/workflows/ci.yml) for details.
+[CI workflow](./.github/workflows/ci.yml) for details.
 
 ## Usage
 
@@ -46,7 +46,7 @@ Tested on Linux, macOS, and Windows GHA runners. See
 | `summary-as-json` | Extracted summary in JSON format                                   |
 |      `grade`      | Extracted grade [A+ to F; or maybe R if `follow-redirects: false`] |
 
-## Example
+### Example
 
 ```yaml
 - name: Analyze HTTP response headers
