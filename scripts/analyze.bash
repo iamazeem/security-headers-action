@@ -32,7 +32,7 @@ analyze() {
 
   for ((RETRY = 0; RETRY <= INPUT_MAX_RETRIES_ON_API_ERROR; RETRY++)); do
     echo "- Making API request [$RETRY / $INPUT_MAX_RETRIES_ON_API_ERROR]"
-    local API_RESPONSE="$(curl -sS -m "$INPUT_API_REQUEST_TIMEOUT_IN_SECONDS" -H "x-api-key: $INPUT_API_KEY" "$API_URL" 2>&1)"
+    local API_RESPONSE="$(curl -sS -m "$INPUT_API_TIMEOUT_IN_SECONDS" -H "x-api-key: $INPUT_API_KEY" "$API_URL" 2>&1)"
     local IS_ERROR=false
     if [[ -z $API_RESPONSE ]]; then
       echo "  Empty response!"
