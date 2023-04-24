@@ -38,7 +38,6 @@ analyze() {
       echo "  Empty response!"
       IS_ERROR=true
     elif ! jq '.' <<<"$API_RESPONSE" >/dev/null 2>&1; then
-      echo "  Invalid respone!"
       echo "$API_RESPONSE"
       IS_ERROR=true
     else
@@ -59,6 +58,8 @@ analyze() {
         echo "  Exiting..."
         exit 1
       fi
+    else
+      break
     fi
   done
 
