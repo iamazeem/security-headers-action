@@ -27,8 +27,8 @@ Tested on Linux, macOS, and Windows GHA runners. See
 | :------------------------: | :------: | :-----: | :---------------------------------------------------------------------------------------------- |
 |         `api-key`          |  `true`  |         | API key from https://securityheaders.com/api/                                                   |
 |      `domain-or-url`       |  `true`  |         | Domain or URL to analyze HTTP response headers                                                  |
-|     `follow-redirects`     | `false`  | `true`  | Enable/disable following of redirect status codes                                               |
-| `hide-results-on-homepage` | `false`  | `true`  | Enable/disable hiding of results on homepage                                                    |
+|     `follow-redirects`     | `false`  | `true`  | Follow redirect status codes                                                                    |
+| `hide-results-on-homepage` | `false`  | `true`  | Hide results on homepage                                                                        |
 |  `api-timeout-in-seconds`  | `false`  |  `30`   | API timeout in seconds (must be +ve, -ve value means default)                                   |
 | `max-retries-on-api-error` | `false`  |   `0`   | Maximum number of retries on API error (must be +ve; -ve value means default)                   |
 |      `expected-grade`      | `false`  |         | Expected grade [A+ to F; or maybe R if `follow-redirects: false`] (invalid value means default) |
