@@ -33,9 +33,10 @@ Tested on Linux, macOS, and Windows GHA runners. See
 | `max-retries-on-api-error` | `false`  |   `0`   | Maximum number of retries on API error (must be +ve; -ve value means default)                   |
 |      `expected-grade`      | `false`  |         | Expected grade [A+ to F; or maybe R if `follow-redirects: false`] (invalid value means default) |
 
-**NOTE**: Prefer using GitHub Actions
-[secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
-to store the API key.
+- To store the API key, prefer using GitHub Actions
+  [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
+
+- The grade lower than `expected-grade` will result in failure.
 
 ### Outputs
 
@@ -45,7 +46,26 @@ to store the API key.
 | `summary-as-json` | Extracted summary in JSON format                                   |
 |      `grade`      | Extracted grade [A+ to F; or maybe R if `follow-redirects: false`] |
 
-## Examples
+## Example
+
+```yaml
+- name: Analyze HTTP response headers
+  uses: iamazeem/security-headers-action@v1
+  id: analyze
+  with:
+    api-key: ${{ secrets.API_KEY }}
+    domain-or-url: securityheaders.com
+
+- name: Print output
+  env:
+    RESULTS_AS_JSON: ${{ steps.analyze.outputs.results-as-json }}
+    SUMMARY_AS_JSON: ${{ steps.analyze.outputs.summary-as-json }}
+    GRADE: ${{ steps.analyze.outputs.grade }}
+  run: |
+    jq '.' <<<"$RESULTS_AS_JSON"
+    jq '.' <<<"$SUMMARY_AS_JSON"
+    echo "GRADE: [$GRADE]"
+```
 
 ## Contribute
 
