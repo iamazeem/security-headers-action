@@ -103,7 +103,7 @@ analyze() {
     echo "$OUTPUT_RESULTS_AS_JSON=$(jq -rc '.' <<<"$API_RESPONSE")"
     echo "$OUTPUT_SUMMARY_AS_JSON=$(jq -rc '.summary' <<<"$API_RESPONSE")"
     echo "$OUTPUT_GRADE=$ACTUAL_GRADE"
-  } | tee -a "$GITHUB_OUTPUT"
+  } | tee -ai "$GITHUB_OUTPUT"
 
   echo "  Output parameters set successfully!"
 

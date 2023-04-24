@@ -24,7 +24,9 @@ validate_environment() {
     echo -n "- [$CMD] "
     if which "$CMD" >/dev/null 2>&1; then
       echo "[FOUND]"
-      $CMD --version
+      if ! $CMD --version 2>/dev/null; then
+        echo "  Could not find version!"
+      fi
       echo
     else
       echo "[NOT FOUND]"
@@ -34,7 +36,8 @@ validate_environment() {
 
   if [[ $FOUND == false ]]; then
     echo "Required commands not found!"
-    echo "See above logs for detals. Exiting..."
+    echo "See above logs for detals."
+    echo "Exiting..."
     exit 1
   fi
 
