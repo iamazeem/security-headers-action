@@ -59,7 +59,7 @@ jobs:
         with:
           api-key: ${{ secrets.API_KEY }}
           domain-or-url: securityheaders.com
-          api-timeout-in-seconds: 1
+          api-timeout-in-seconds: 0.5
           max-retries-on-api-error: 2
 
       - name: Verify 3
