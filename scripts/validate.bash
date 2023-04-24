@@ -5,8 +5,7 @@ set -eE -o functrace
 fatal() {
   local LINE="$1"
   local CMD="$2"
-  echo "[FATAL] $LINE: $CMD"
-  exit 1
+  echo "[FATAL] $LINE: $CMD" >&2
 }
 
 trap 'fatal "$LINENO" "$BASH_COMMAND"' ERR
