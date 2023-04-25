@@ -46,7 +46,9 @@ Tested on Linux, macOS, and Windows GHA runners. See
 | `summary-as-json` | Extracted summary in JSON format                                   |
 |      `grade`      | Extracted grade [A+ to F; or maybe R if `follow-redirects: false`] |
 
-### Example
+### Examples
+
+#### Analyze and print output in the next step
 
 ```yaml
 - name: Analyze HTTP response headers
@@ -65,6 +67,30 @@ Tested on Linux, macOS, and Windows GHA runners. See
     jq '.' <<<"$RESULTS_AS_JSON"
     jq '.' <<<"$SUMMARY_AS_JSON"
     echo "GRADE: [$GRADE]"
+```
+
+#### Analyze and fail on an unexpected grade
+
+```yaml
+- name: Analyze HTTP response headers
+  uses: iamazeem/security-headers-action@v1
+  id: analyze
+  with:
+    api-key: ${{ secrets.API_KEY }}
+    domain-or-url: securityheaders.com
+    expected-grade: A+                    # should fail on lower grade
+```
+
+#### Analyze and retry on failure
+
+```yaml
+- name: Analyze HTTP response headers
+  uses: iamazeem/security-headers-action@v1
+  id: analyze
+  with:
+    api-key: ${{ secrets.API_KEY }}
+    domain-or-url: securityheaders.com
+    max-retries-on-api-error: 2           # will retry on failure
 ```
 
 ## Contribute
